@@ -13,7 +13,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { X, RefreshCw } from "lucide-react";
 
 export default function FilterSection(): React.ReactNode {
   const { 
@@ -57,71 +59,167 @@ export default function FilterSection(): React.ReactNode {
     resetFilters();
   };
 
+  const handleClearName = () => {
+    setName("");
+  };
+
+  const hasActiveFilters = status || gender || name;
+
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>Filtreler</CardTitle>
-      </CardHeader>
+    <Card className="mb-8 overflow-hidden border border-border/40 bg-card">
       <CardContent>
-        <div className="flex flex-wrap gap-4">
-          <div className="flex flex-col space-y-2 min-w-[200px]">
-            <label htmlFor="name" className="text-sm font-medium">İsim:</label>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Karakter adı ara..."
-              className="w-full"
-            />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="space-y-2">
+            <label htmlFor="name" className="text-sm font-medium flex items-center gap-1.5">
+              İsim Ara
+            </label>
+            <div className="relative">
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Karakter adı ara..."
+                className="pr-8 transition-all focus-visible:ring-primary/30 border-border/60"
+              />
+              {name && (
+                <button 
+                  onClick={handleClearName}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="flex flex-col space-y-2 min-w-[200px]">
-            <label htmlFor="status" className="text-sm font-medium">Durum:</label>
+          <div className="space-y-2">
+            <label htmlFor="status" className="text-sm font-medium">Durum</label>
             <Select 
               value={status || "all"} 
               onValueChange={(value) => setStatus(value === "all" ? "" : value)}
             >
-              <SelectTrigger id="status">
+              <SelectTrigger id="status" className="w-full transition-all focus-visible:ring-primary/30 cursor-pointer border-border/60">
                 <SelectValue placeholder="Tümü" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tümü</SelectItem>
-                <SelectItem value="alive">Alive</SelectItem>
-                <SelectItem value="dead">Dead</SelectItem>
-                <SelectItem value="unknown">Unknown</SelectItem>
+                <SelectItem value="all" className="cursor-pointer">Tümü</SelectItem>
+                <SelectItem value="alive" className="cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                    <span>Alive</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="dead" className="cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                    <span>Dead</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="unknown" className="cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-gray-400"></span>
+                    <span>Unknown</span>
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
           
-          <div className="flex flex-col space-y-2 min-w-[200px]">
-            <label htmlFor="gender" className="text-sm font-medium">Cinsiyet:</label>
+          <div className="space-y-2">
+            <label htmlFor="gender" className="text-sm font-medium">Cinsiyet</label>
             <Select 
               value={gender || "all"} 
               onValueChange={(value) => setGender(value === "all" ? "" : value)}
             >
-              <SelectTrigger id="gender">
+              <SelectTrigger id="gender" className="w-full transition-all focus-visible:ring-primary/30 cursor-pointer border-border/60">
                 <SelectValue placeholder="Tümü" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tümü</SelectItem>
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
-                <SelectItem value="genderless">Genderless</SelectItem>
-                <SelectItem value="unknown">Unknown</SelectItem>
+                <SelectItem value="all" className="cursor-pointer">Tümü</SelectItem>
+                <SelectItem value="male" className="cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <span className="text-blue-500">♂</span>
+                    <span>Male</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="female" className="cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <span className="text-pink-500">♀</span>
+                    <span>Female</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="genderless" className="cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <span className="text-purple-500 text-xs">⊘</span>
+                    <span>Genderless</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="unknown" className="cursor-pointer">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500">?</span>
+                    <span>Unknown</span>
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
+        </div>
 
-          <div className="flex items-end">
+        {hasActiveFilters && (
+          <div className="mt-6 pt-4 border-t flex flex-wrap gap-2 justify-between items-center">
+            <div className="flex flex-wrap gap-2 items-center">
+              <div className="text-sm text-muted-foreground mr-2">Aktif Filtreler:</div>
+              {name && (
+                <Badge variant="outline" className="group border-border/60">
+                  İsim: {name}
+                  <button onClick={handleClearName} className="ml-1 opacity-70 group-hover:opacity-100 cursor-pointer">
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+              {status && (
+                <Badge 
+                  variant="outline" 
+                  className={`group ${
+                    status === "alive" ? "border-green-200 bg-green-50/70 text-green-700" : 
+                    status === "dead" ? "border-red-200 bg-red-50/70 text-red-700" : 
+                    "border-gray-200 bg-gray-50/70 text-gray-700"
+                  }`}
+                >
+                  Durum: {status}
+                  <button onClick={() => setStatus("")} className="ml-1 opacity-70 group-hover:opacity-100 cursor-pointer">
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+              {gender && (
+                <Badge 
+                  variant="outline" 
+                  className={`group ${
+                    gender === "male" ? "border-blue-200 bg-blue-50/70 text-blue-700" : 
+                    gender === "female" ? "border-pink-200 bg-pink-50/70 text-pink-700" : 
+                    "border-gray-200 bg-gray-50/70 text-gray-700"
+                  }`}
+                >
+                  Cinsiyet: {gender}
+                  <button onClick={() => setGender("")} className="ml-1 opacity-70 group-hover:opacity-100 cursor-pointer">
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+            </div>
             <Button 
               onClick={handleReset}
-              variant="destructive"
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-destructive hover:bg-background/80 flex items-center gap-1"
             >
-              Filtreleri Sıfırla
+              <RefreshCw className="h-3.5 w-3.5" />
+              <span>Sıfırla</span>
             </Button>
           </div>
-        </div>
+        )}
       </CardContent>
     </Card>
   );

@@ -119,13 +119,13 @@ export default function CharacterList(): React.ReactNode {
   const getGenderIcon = (gender: string) => {
     switch (gender.toLowerCase()) {
       case "male":
-        return <span className="text-blue-500">♂</span>;
+        return <span className="text-blue-500 inline-flex items-center justify-center">♂</span>;
       case "female":
-        return <span className="text-pink-500">♀</span>;
+        return <span className="text-pink-500 inline-flex items-center justify-center">♀</span>;
       case "genderless":
-        return <span className="text-purple-500 text-xs">⊘</span>;
+        return <span className="text-purple-500 text-xs inline-flex items-center justify-center">⊘</span>;
       default:
-        return <span className="text-gray-500">?</span>;
+        return <span className="text-gray-500 inline-flex items-center justify-center">?</span>;
     }
   };
 
@@ -167,7 +167,7 @@ export default function CharacterList(): React.ReactNode {
                       >
                         <div className="flex items-center gap-1">
                           {getGenderIcon(character.gender)}
-                          <span>{translateGender(character.gender)}</span>
+                          <span className="inline-flex items-center">{translateGender(character.gender)}</span>
                         </div>
                       </Badge>
                     </div>

@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // Nuqs için gerekli yapılandırma
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['localhost:3000'],
+    },
+  },
+  // Harici görüntü kaynaklarını yapılandırma
+  images: {
+    domains: ['rickandmortyapi.com'],
+  },
 };
 
 module.exports = nextConfig; 

@@ -16,6 +16,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, RefreshCw } from "lucide-react";
+import { translateStatus, translateGender } from "../utils/translations";
 
 export default function FilterSection(): React.ReactNode {
   const { 
@@ -107,19 +108,19 @@ export default function FilterSection(): React.ReactNode {
                 <SelectItem value="alive" className="cursor-pointer">
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                    <span>Alive</span>
+                    <span>{translateStatus("alive")}</span>
                   </div>
                 </SelectItem>
                 <SelectItem value="dead" className="cursor-pointer">
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-red-500"></span>
-                    <span>Dead</span>
+                    <span>{translateStatus("dead")}</span>
                   </div>
                 </SelectItem>
                 <SelectItem value="unknown" className="cursor-pointer">
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-gray-400"></span>
-                    <span>Unknown</span>
+                    <span>{translateStatus("unknown")}</span>
                   </div>
                 </SelectItem>
               </SelectContent>
@@ -140,25 +141,25 @@ export default function FilterSection(): React.ReactNode {
                 <SelectItem value="male" className="cursor-pointer">
                   <div className="flex items-center gap-2">
                     <span className="text-blue-500">♂</span>
-                    <span>Male</span>
+                    <span>{translateGender("male")}</span>
                   </div>
                 </SelectItem>
                 <SelectItem value="female" className="cursor-pointer">
                   <div className="flex items-center gap-2">
                     <span className="text-pink-500">♀</span>
-                    <span>Female</span>
+                    <span>{translateGender("female")}</span>
                   </div>
                 </SelectItem>
                 <SelectItem value="genderless" className="cursor-pointer">
                   <div className="flex items-center gap-2">
                     <span className="text-purple-500 text-xs">⊘</span>
-                    <span>Genderless</span>
+                    <span>{translateGender("genderless")}</span>
                   </div>
                 </SelectItem>
                 <SelectItem value="unknown" className="cursor-pointer">
                   <div className="flex items-center gap-2">
                     <span className="text-gray-500">?</span>
-                    <span>Unknown</span>
+                    <span>{translateGender("unknown")}</span>
                   </div>
                 </SelectItem>
               </SelectContent>
@@ -187,7 +188,7 @@ export default function FilterSection(): React.ReactNode {
                     "border-gray-200 bg-gray-50/70 text-gray-700"
                   }`}
                 >
-                  Durum: {status}
+                  Durum: {translateStatus(status)}
                   <button onClick={() => setStatus("")} className="ml-1 opacity-70 group-hover:opacity-100 cursor-pointer">
                     <X className="h-3 w-3" />
                   </button>
@@ -202,7 +203,7 @@ export default function FilterSection(): React.ReactNode {
                     "border-gray-200 bg-gray-50/70 text-gray-700"
                   }`}
                 >
-                  Cinsiyet: {gender}
+                  Cinsiyet: {translateGender(gender)}
                   <button onClick={() => setGender("")} className="ml-1 opacity-70 group-hover:opacity-100 cursor-pointer">
                     <X className="h-3 w-3" />
                   </button>

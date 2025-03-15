@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
+import { translateStatus, translateGender } from "../utils/translations";
 
 export default function CharacterList(): React.ReactNode { 
   const { status, gender, name, page, setPage } = useFiltersStore();
@@ -133,7 +134,7 @@ export default function CharacterList(): React.ReactNode {
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {data.results.map((character) => (
-            <Card key={character.id} className="overflow-hidden py-0 border hover:border-primary/30 transition-colors duration-200">
+            <Card key={character.id} className="overflow-hidden py-0 border hover:border-primary/30 transition-all duration-200 opacity-70 hover:opacity-100 hover:scale-105 hover:cursor-pointer">
               <div className="flex flex-row h-full">
                 <div className="w-1/3 overflow-hidden">
                   <Image 
@@ -157,7 +158,7 @@ export default function CharacterList(): React.ReactNode {
                       >
                         <div className="flex items-center gap-1">
                           {getStatusIcon(character.status)}
-                          <span>{character.status}</span>
+                          <span>{translateStatus(character.status)}</span>
                         </div>
                       </Badge>
                       <Badge 
@@ -166,7 +167,7 @@ export default function CharacterList(): React.ReactNode {
                       >
                         <div className="flex items-center gap-1">
                           {getGenderIcon(character.gender)}
-                          <span>{character.gender}</span>
+                          <span>{translateGender(character.gender)}</span>
                         </div>
                       </Badge>
                     </div>
